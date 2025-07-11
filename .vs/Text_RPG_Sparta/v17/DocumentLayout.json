@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\oks14\\OneDrive - jbnu.ac.kr\\\uBC14\uD0D5 \uD654\uBA74\\Practice\\Text_RPG_Sparta\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{238AD61F-3BA0-492D-B258-F0223307BC7A}|Text_RPG_Sparta\\Text_RPG_Sparta.csproj|c:\\users\\oks14\\onedrive - jbnu.ac.kr\\\uBC14\uD0D5 \uD654\uBA74\\practice\\text_rpg_sparta\\text_rpg_sparta\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{238AD61F-3BA0-492D-B258-F0223307BC7A}|Text_RPG_Sparta\\Text_RPG_Sparta.csproj|solutionrelative:text_rpg_sparta\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\oks14\\OneDrive - jbnu.ac.kr\\\uBC14\uD0D5 \uD654\uBA74\\Practice\\Text_RPG_Sparta\\Text_RPG_Sparta\\Program.cs",
+              "RelativeDocumentMoniker": "Text_RPG_Sparta\\Program.cs",
+              "ToolTip": "C:\\Users\\oks14\\OneDrive - jbnu.ac.kr\\\uBC14\uD0D5 \uD654\uBA74\\Practice\\Text_RPG_Sparta\\Text_RPG_Sparta\\Program.cs",
+              "RelativeToolTip": "Text_RPG_Sparta\\Program.cs",
+              "ViewState": "AgIAAOAAAAAAAAAAAAAAAP4AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-11T05:19:14.027Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
