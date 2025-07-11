@@ -14,6 +14,7 @@ namespace Text_RPG_Sparta
         static List<Weapon> shopWeapon = new List<Weapon> { };
         static List<Armor> shopArmor = new List<Armor> { };
         static string Desvoid = "\n                                                                        ";
+
         static Weapon oldSword = new Weapon
         {
             Name = "낡은 검",
@@ -23,6 +24,27 @@ namespace Text_RPG_Sparta
             ShopDescription = $"우리 집에서 쓰던 식칼인데..날이 좀 무뎌.. 베일까봐 무서워서..",
             Description = $"우리 집에서 쓰던 식칼인데..날이 좀 무뎌.. 베일까봐 무서워서.."
         };
+
+        static Weapon bronzeAx = new Weapon
+        {
+            Name = "청동 도끼",
+            IncreaseAtk = 5,
+            Type = ItemType.Weapon,
+            Price = 1500,
+            ShopDescription = $"오빠가 쓰던 청동 도끼인데.. 날이 좀 무뎌.. 베일까봐 무서워서..",
+            Description = $"오빠가 쓰던 청동 도끼인데.. 날이 좀 무뎌.. 베일까봐 무서워서.."
+        };
+
+        static Weapon spartanSpear = new Weapon
+        {
+            Name = "스파르타의 창",
+            IncreaseAtk = 10,
+            Type = ItemType.Weapon,
+            Price = 2500,
+            ShopDescription = $"전설의 스파르타 전사의 전설에 등장하는 전설의 스파르타 창입니다.",
+            Description = $"전설의 스파르타 전사의 전설에 등장하는 전설의 스파르타 창입니다."
+        };
+
         static Armor noviceArmor = new Armor
         {
             Name = "수련자 갑옷",
@@ -31,6 +53,26 @@ namespace Text_RPG_Sparta
             Price = 1000,
             ShopDescription = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야.",
             Description = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야."
+        };
+
+        static Armor castIronArmor = new Armor
+        {
+            Name = "무쇠 갑옷",
+            IncreaseDef = 9,
+            Type = ItemType.Armor,
+            Price = 2000,
+            ShopDescription = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야.",
+            Description = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야."
+        };
+
+        static Armor armorOfSparta = new Armor
+        {
+            Name = "스파르타의 갑옷",
+            IncreaseDef = 15,
+            Type = ItemType.Armor,
+            Price = 3500,
+            ShopDescription = $"전설의 스파르타 전사의 전설에 등장하는 전설의 스파르타 갑옷입니다.",
+            Description = $"전설의 스파르타 전사의 전설에 등장하는 전설의 스파르타 갑옷입니다."
         };
 
         static Player player = new Player();
@@ -47,6 +89,10 @@ namespace Text_RPG_Sparta
 
             shopWeapon.Add(oldSword);
             shopArmor.Add(noviceArmor);
+            shopArmor.Add(castIronArmor);
+            shopWeapon.Add(bronzeAx);
+            shopWeapon.Add(spartanSpear);
+            shopArmor.Add(armorOfSparta);
 
             ShowVillageMenu();
 
@@ -72,7 +118,7 @@ namespace Text_RPG_Sparta
 
         static void LeftShopText(string text)
         {
-            int padding = (Console.WindowWidth - 100) / 2;
+            int padding = (Console.WindowWidth - 114) / 2;
             Console.Write(new string(' ', padding) + text);
         }
         static void ShowVillageMenu()
@@ -234,9 +280,9 @@ namespace Text_RPG_Sparta
                 Console.WriteLine("\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 MidShopText("   [장 비  메 뉴]\n");
-
                 MidShopText("\b\b장착할 아이템을 선택하세요.\n");
                 Console.ForegroundColor = ConsoleColor.White;
+
                 int index = 1;
                 foreach (var item in player.Inventory)
                 {
