@@ -107,7 +107,8 @@ namespace Text_RPG_Sparta
                     case "4": DungeonMenu(); break;
                     case "5": Rest(); break;
                     default:
-                        Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 25), Console.WindowHeight / 2 - 2);
                         Console.WriteLine("잘못된 입력입니다.");
                         Console.ReadKey();
                         break;
@@ -145,7 +146,8 @@ namespace Text_RPG_Sparta
                 }
                 else
                 {
-                    Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                    Console.Clear();
+                    Console.SetCursorPosition((Console.WindowWidth / 2 - 25), Console.WindowHeight / 2 - 2);
                     Console.WriteLine("잘못된 입력입니다.");
                     Console.ReadKey();
                 }
@@ -158,8 +160,8 @@ namespace Text_RPG_Sparta
                 Console.Clear();
                 Console.WriteLine("\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                MidShopText(" [인 벤 토 리]\n");
-                MidText("       [아이템  목록]\n");
+                MidShopText("  [인 벤 토 리]\n");
+                MidText("           [아 이 템  목 록]\n");
 
                 foreach (var item in player.Inventory)
                 {
@@ -216,7 +218,8 @@ namespace Text_RPG_Sparta
                     case "":
                         return;
                     default:
-                        Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 5), Console.WindowHeight / 2 - 2);
                         Console.WriteLine("잘못된 입력입니다.");
                         Console.ReadKey();
                         break;
@@ -230,9 +233,9 @@ namespace Text_RPG_Sparta
                 Console.Clear();
                 Console.WriteLine("\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                MidShopText("장비 메뉴\n");
+                MidShopText("   [장 비  메 뉴]\n");
 
-                MidShopText("장착할 아이템을 선택하세요.\n");
+                MidShopText("\b\b장착할 아이템을 선택하세요.\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 int index = 1;
                 foreach (var item in player.Inventory)
@@ -271,10 +274,12 @@ namespace Text_RPG_Sparta
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.SetCursorPosition(0, 23);
                 MidText("* 장비의 번호를 입력하세요.     Enter. 돌아가기");
                 Console.SetCursorPosition(0, 25);
                 MidText("원하시는 행동을 입력해주세요.\n");
                 LeftText("▶▶");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
 
                 string input = Console.ReadLine();
@@ -289,16 +294,24 @@ namespace Text_RPG_Sparta
                     if (selectedItem.IsEquipped)
                     {
                         selectedItem.IsEquipped = false;
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 15), Console.WindowHeight / 2 - 2);
                         Console.WriteLine($"아이템 '{selectedItem.Name}'의 장착을 해제했습니다.");
+                        Console.ReadKey();
                     }
                     else
                     {
                         selectedItem.IsEquipped = true;
+                        Console.Clear();
+                        Console.SetCursorPosition(Console.WindowWidth / 2 - 15, Console.WindowHeight / 2 -2);
                         Console.WriteLine($"아이템 '{selectedItem.Name}'을(를) 장착했습니다.");
+                        Console.ReadKey();
                     }
                 }
                 else
                 {
+                    Console.Clear();
+                    Console.SetCursorPosition((Console.WindowWidth / 2) -5 , Console.WindowHeight / 2 - 2);
                     Console.WriteLine("잘못된 입력입니다.");
                     Console.ReadKey();
                 }
@@ -403,8 +416,8 @@ namespace Text_RPG_Sparta
                             number++;
                         }
                         Console.SetCursorPosition(0, 22);
-                        Console.ForegroundColor = ConsoleColor.Yellow;
                         MidShopText($"[보유 골드]       {player.Coin} G\n");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         MidShopText("\b\b\b\b* 구매할 상품의 번호를 입력하세요.    Enter. 돌아가기\n");
                         MidText("원하시는 행동을 입력해주세요.\n");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -442,6 +455,8 @@ namespace Text_RPG_Sparta
                             {
                                 if (itemToBuy.IsPurchased)
                                 {
+                                    Console.Clear();
+                                    Console.SetCursorPosition((Console.WindowWidth / 2 - 10), Console.WindowHeight / 2 - 2);
                                     Console.WriteLine("이미 구매한 아이템입니다.");
                                     Console.ReadKey();
                                 }
@@ -450,17 +465,23 @@ namespace Text_RPG_Sparta
                                     player.Inventory.Add(itemToBuy);
                                     player.Coin -= itemToBuy.Price;
                                     itemToBuy.IsPurchased = true;
+                                    Console.Clear();
+                                    Console.SetCursorPosition((Console.WindowWidth / 2 - 25), Console.WindowHeight / 2 - 2);
                                     Console.WriteLine($"아이템 '{itemToBuy.Name}'을(를) 구매했습니다. 현재 골드: {player.Coin} G");
                                     Console.ReadKey();
                                 }
                                 else
                                 {
+                                    Console.Clear();
+                                    Console.SetCursorPosition(Console.WindowWidth / 2 - 25, Console.WindowHeight / 2 - 2);
                                     Console.WriteLine("골드가 부족합니다.");
                                     Console.ReadKey();
                                 }
                             }
                             else
                             {
+                                Console.Clear();
+                                Console.SetCursorPosition((Console.WindowWidth / 2 - 25), Console.WindowHeight/2 -2);
                                 Console.WriteLine("잘못된 입력입니다.");
                                 Console.ReadKey();
                             }
@@ -494,6 +515,8 @@ namespace Text_RPG_Sparta
                     }
                     else
                     {
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 15), Console.WindowHeight / 2 - 2);
                         Console.WriteLine("잘못된 입력입니다.");
                         Console.ReadKey();
                     }
@@ -504,7 +527,8 @@ namespace Text_RPG_Sparta
                 }
                 else
                 {
-                    Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                    Console.Clear();
+                    Console.SetCursorPosition((Console.WindowWidth / 2 - 15), Console.WindowHeight / 2 - 2);
                     Console.WriteLine("잘못된 입력입니다.");
                     Console.ReadKey();
                 }
@@ -578,6 +602,7 @@ namespace Text_RPG_Sparta
                         return;
 
                     default:
+                        Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
                         Console.WriteLine("잘못된 입력입니다.");
                         Console.ReadKey();
                         break;
