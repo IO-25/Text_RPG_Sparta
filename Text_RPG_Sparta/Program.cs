@@ -13,7 +13,6 @@ namespace Text_RPG_Sparta
 
         static List<Weapon> shopWeapon = new List<Weapon> { };
         static List<Armor> shopArmor = new List<Armor> { };
-        static string Desvoid = "\n                                                                        ";
 
         static Weapon oldSword = new Weapon
         {
@@ -187,9 +186,7 @@ namespace Text_RPG_Sparta
 
                 string? input = Console.ReadLine();
                 if (input == "")
-                {
                     break;
-                }
                 else
                 {
                     Console.Clear();
@@ -235,9 +232,9 @@ namespace Text_RPG_Sparta
                         Console.SetCursorPosition(38, Console.CursorTop);
 
                         if (item.IsPurchased)
-                        { Console.Write($"|(구매완료)"); }
+                            Console.Write($"|(구매완료)");
                         else if (!item.IsPurchased)
-                        { Console.Write($"| {item.Price} G"); }
+                            Console.Write($"| {item.Price} G");
 
                         Console.SetCursorPosition(48, Console.CursorTop);
                         Console.Write($"| {item.ShopDescription}\n\n");
@@ -261,8 +258,7 @@ namespace Text_RPG_Sparta
                     case "1":
                         EquipmentMenu();
                         break;
-                    case "":
-                        return;
+                    case "": return;
                     default:
                         Console.Clear();
                         Console.SetCursorPosition((Console.WindowWidth / 2 - 5), Console.WindowHeight / 2 - 2);
@@ -310,9 +306,9 @@ namespace Text_RPG_Sparta
                         Console.SetCursorPosition(38, Console.CursorTop);
 
                         if (item.IsPurchased)
-                        { Console.Write($"|구매완료"); }
+                            Console.Write($"|구매완료");
                         else if (!item.IsPurchased)
-                        { Console.Write($"| {item.Price} G"); }
+                            Console.Write($"| {item.Price} G");
 
                         Console.SetCursorPosition(48, Console.CursorTop);
                         Console.Write($"| {item.ShopDescription}\n\n");
@@ -329,14 +325,14 @@ namespace Text_RPG_Sparta
                 Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
 
                 string input = Console.ReadLine();
+
                 if (input == "")
-                {
                     break;
-                }
+
                 if (int.TryParse(input, out int choice) && choice >= 1 && choice <= player.Inventory.Count)
                 {
-
                     var selectedItem = player.Inventory[choice - 1];
+
                     if (selectedItem.IsEquipped)
                     {
                         selectedItem.IsEquipped = false;
@@ -383,9 +379,9 @@ namespace Text_RPG_Sparta
                     Console.SetCursorPosition(38, Console.CursorTop);
 
                     if (item.IsPurchased)
-                    { Console.Write($"| 구매완료"); }
+                        Console.Write($"| 구매완료");
                     else if (!item.IsPurchased)
-                    { Console.Write($"| {item.Price} G"); }
+                        Console.Write($"| {item.Price} G");
 
                     Console.SetCursorPosition(48, Console.CursorTop);
                     Console.Write($"| {item.ShopDescription}\n\n");
@@ -398,9 +394,9 @@ namespace Text_RPG_Sparta
                     Console.SetCursorPosition(38, Console.CursorTop);
 
                     if (item.IsPurchased)
-                    { Console.Write($"| 구매완료"); }
+                        Console.Write($"| 구매완료");
                     else if (!item.IsPurchased)
-                    { Console.Write($"| {item.Price} G"); }
+                        Console.Write($"| {item.Price} G");
 
                     Console.SetCursorPosition(48, Console.CursorTop);
                     Console.Write($"| {item.ShopDescription}\n\n");
@@ -436,9 +432,9 @@ namespace Text_RPG_Sparta
                             Console.SetCursorPosition(38, Console.CursorTop);
 
                             if (item.IsPurchased)
-                            { Console.Write($"| 구매완료"); }
+                                Console.Write($"| 구매완료");
                             else if (!item.IsPurchased)
-                            { Console.Write($"| {item.Price} G"); }
+                                Console.Write($"| {item.Price} G");
 
                             Console.SetCursorPosition(48, Console.CursorTop);
                             Console.Write($"| {item.ShopDescription}\n\n");
@@ -453,9 +449,9 @@ namespace Text_RPG_Sparta
                             Console.SetCursorPosition(38, Console.CursorTop);
 
                             if (item.IsPurchased)
-                            { Console.Write($"| 구매완료"); }
+                                Console.Write($"| 구매완료");
                             else if (!item.IsPurchased)
-                            { Console.Write($"| {item.Price} G"); }
+                                Console.Write($"| {item.Price} G");
 
                             Console.SetCursorPosition(48, Console.CursorTop);
                             Console.Write($"| {item.ShopDescription}\n\n");
@@ -472,9 +468,8 @@ namespace Text_RPG_Sparta
                         string? buyInput = Console.ReadLine();
 
                         if (buyInput == "")
-                        {
                             break;
-                        }
+
                         if (int.TryParse(buyInput, out int buyChoice) && buyChoice > 0 && buyChoice <= shopWeapon.Count + shopArmor.Count)
                         {
                             Item itemToBuy = null;
@@ -544,31 +539,28 @@ namespace Text_RPG_Sparta
                         MidShopText("     상 점\n");
                         MidText("판매할 아이템을 선택하세요.\n");
                         MidText("       [아이템  목록]\n");
+
                         int number = 1;
                         foreach (var item in player.Inventory)
                         {
                             if (item.IsEquipped)
-                            {
                                 LeftShopText($"{number}. {item.GetDisplayName()}");
-                            }
                             else
-                            {
                                 LeftShopText($"{number}. {item.GetDisplayName()}");
-                            }
+
                             Console.SetCursorPosition(25, Console.CursorTop);
                             if (item.Type == ItemType.Weapon)
-                            {
                                 Console.Write($"| 공격력: {item.IncreaseAtk}");
-                            }
+
                             else if (item.Type == ItemType.Armor)
-                            {
                                 Console.Write($"| 방어력: {item.IncreaseDef}");
-                            }
+
                             Console.SetCursorPosition(38, Console.CursorTop);
                             if (item.IsPurchased)
-                            { Console.Write($"| 구매완료"); }
+                                Console.Write($"| 구매완료");
                             else if (!item.IsPurchased)
-                            { Console.Write($"| {item.Price} G"); }
+                                Console.Write($"| {item.Price} G");
+
                             Console.SetCursorPosition(48, Console.CursorTop);
                             Console.Write($"| {item.ShopDescription}\n\n");
                             number++;
@@ -581,11 +573,11 @@ namespace Text_RPG_Sparta
                         Console.ForegroundColor = ConsoleColor.White;
                         LeftText("▶▶");
                         Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                        
                         string? sellInput = Console.ReadLine();
                         if (sellInput == "")
-                        {
                             break;
-                        }
+                        
                         if (int.TryParse(sellInput, out int sellChoice) && sellChoice > 0 && sellChoice <= player.Inventory.Count)
                         {
                             var itemToSell = player.Inventory[sellChoice - 1];
@@ -616,14 +608,11 @@ namespace Text_RPG_Sparta
                                 }
                                 itemToSell.IsEquipped = false;
                             }
-
                         }
                     }
                 }
                 else if (input == "")
-                {
                     break;
-                }
                 else
                 {
                     Console.Clear();
@@ -697,8 +686,7 @@ namespace Text_RPG_Sparta
                         hardDungeon.EnterDungeon(3);
                         break;
 
-                    case "":
-                        return;
+                    case "": return;
 
                     default:
                         Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
@@ -767,9 +755,8 @@ namespace Text_RPG_Sparta
                             MidText($"     체력이 {player.MaxHp}으로 회복되었습니다.\n\n");
                         }
                         else
-                        {
                             MidText($"     체력이 {player.Hp}으로 회복되었습니다.\n\n");
-                        }
+                        
                         MidText("   휴식이 끝났습니다.");
                         Console.WriteLine("\n");
                         MidText("\b메뉴로 돌아가려면 아무 키나 누르세요.");
@@ -777,9 +764,7 @@ namespace Text_RPG_Sparta
                         break;
                     }
                     break;
-                case "":
-                    return;
-                    break;
+                case "": return;
                 default:
                     Console.Clear();
                     Console.SetCursorPosition((Console.WindowWidth / 2 - 6), Console.WindowHeight / 2 - 2);
