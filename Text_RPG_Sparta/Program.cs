@@ -573,11 +573,11 @@ namespace Text_RPG_Sparta
                         Console.ForegroundColor = ConsoleColor.White;
                         LeftText("▶▶");
                         Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
-                        
+
                         string? sellInput = Console.ReadLine();
                         if (sellInput == "")
                             break;
-                        
+
                         if (int.TryParse(sellInput, out int sellChoice) && sellChoice > 0 && sellChoice <= player.Inventory.Count)
                         {
                             var itemToSell = player.Inventory[sellChoice - 1];
@@ -586,7 +586,7 @@ namespace Text_RPG_Sparta
                                 if (itemToSell.IsEquipped)
                                 {
                                     itemToSell.IsEquipped = false;
-                                    player.Coin += itemToSell.Price*0.85;
+                                    player.Coin += itemToSell.Price * 0.85;
                                     player.Inventory.Remove(itemToSell);
                                     itemToSell.IsPurchased = false;
 
@@ -597,7 +597,7 @@ namespace Text_RPG_Sparta
                                 }
                                 else
                                 {
-                                    player.Coin += itemToSell.Price*0.85;
+                                    player.Coin += itemToSell.Price * 0.85;
                                     player.Inventory.Remove(itemToSell);
                                     itemToSell.IsPurchased = false;
 
@@ -645,7 +645,6 @@ namespace Text_RPG_Sparta
                 switch (input)
                 {
                     case "1":
-                        Console.WriteLine("쉬운 던전에 입장합니다.");
                         Console.ReadKey(true);
                         isDungeonEntered = true;
                         Dungeon easyDungeon = new Dungeon
@@ -659,7 +658,6 @@ namespace Text_RPG_Sparta
                         break;
 
                     case "2":
-                        Console.WriteLine("보통 던전에 입장합니다.");
                         Console.ReadKey(true);
                         isDungeonEntered = true;
                         Dungeon nomalDungeon = new Dungeon
@@ -673,7 +671,6 @@ namespace Text_RPG_Sparta
                         break;
 
                     case "3":
-                        Console.WriteLine("어려운 던전에 입장합니다.");
                         Console.ReadKey(true);
                         isDungeonEntered = true;
                         Dungeon hardDungeon = new Dungeon
@@ -756,7 +753,7 @@ namespace Text_RPG_Sparta
                         }
                         else
                             MidText($"     체력이 {player.Hp}으로 회복되었습니다.\n\n");
-                        
+
                         MidText("   휴식이 끝났습니다.");
                         Console.WriteLine("\n");
                         MidText("\b메뉴로 돌아가려면 아무 키나 누르세요.");
@@ -773,7 +770,7 @@ namespace Text_RPG_Sparta
                     break;
             }
         }
-    
+
         public class Player
         {
             public string Name { get; set; } = "막시무스";
@@ -836,24 +833,37 @@ namespace Text_RPG_Sparta
             public void EnterDungeon(int difficulty)
             {
                 Console.Clear();
-                Console.WriteLine("\n\n\n");
-                for (int i = 0; i < (Console.WindowWidth / 3) + 2; i++)
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\n");
+                MidText("페르시아인이 도사리고있는 던전입니다.\n\n\n");
+                LeftText("1. 쉬운 던전\n\n");
+                LeftText("2. 보통 던전\n\n");
+                LeftText("3. 어려운 던전\n\n\n\n\n\n\n\n");
+                LeftText("Enter. 돌아가기\n\n\n");
+                Console.SetCursorPosition(0, 24);
+                MidShopText($"[보유 골드] {player.Coin} G [현재 체력] {player.Hp} [공격력] {player.GetAdditionalAtk()} [방어력] {player.GetAdditionalDef}  \n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                MidText("원하시는 행동을 입력해주세요.\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                LeftText("▶▶");
+                Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+
+                string? input = Console.ReadLine();
+                switch (input)
                 {
-                    Console.Write(" ");
+                    case "1":
+                        EquipmentMenu();
+                        break;
+                    case "": return;
+                    default:
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 5), Console.WindowHeight / 2 - 2);
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Console.ReadKey();
+                        break;
+
                 }
-                Console.Write($"던전 이름: {Name} | 권장 방어력: {DefNeed}\n\n");
-                for (int i = 0; i < (Console.WindowWidth / 3) + 2; i++)
-                {
-                    Console.Write(" ");
-                }
-                Console.Write($"설명: {Description}\n\n");
-                Console.WriteLine("\n\n\n");
-                for (int i = 0; i < (Console.WindowWidth / 2.7) + 1; i++)
-                {
-                    Console.Write(" ");
-                }
-                Console.Write("던전에 입장하려면 아무 키나 누르세요.");
-                Console.ReadKey();
             }
         }
     }
