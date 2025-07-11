@@ -13,13 +13,15 @@ namespace Text_RPG_Sparta
 
         static List<Weapon> shopWeapon = new List<Weapon> { };
         static List<Armor> shopArmor = new List<Armor> { };
+        static string Desvoid = "\n                                                                        ";
         static Weapon oldSword = new Weapon
         {
             Name = "낡은 검",
             IncreaseAtk = 2,
             Type = ItemType.Weapon,
             Price = 600,
-            Description = "우리 집에서 쓰던 식칼인데.. 날이 좀 많이 무뎌.. 베일까봐 무서워서.."
+            ShopDescription = $"우리 집에서 쓰던 식칼인데..날이 좀 무뎌.. 베일까봐 무서워서..",
+            Description = $"우리 집에서 쓰던 식칼인데..날이 좀 무뎌.. 베일까봐 무서워서.."
         };
         static Armor noviceArmor = new Armor
         {
@@ -27,7 +29,8 @@ namespace Text_RPG_Sparta
             IncreaseDef = 5,
             Type = ItemType.Armor,
             Price = 1000,
-            Description = "오빠가 입던 맨투맨 티인데.. 조금 두꺼우니까 이거라도 입으면 나을거야."
+            ShopDescription = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야.",
+            Description = $"오빠가 입던 맨투맨 티인데..두꺼우니까 이거라도 입으면 나을거야."
         };
 
         static Player player = new Player();
@@ -69,7 +72,7 @@ namespace Text_RPG_Sparta
 
         static void LeftShopText(string text)
         {
-            int padding = (Console.WindowWidth - 80) / 2;
+            int padding = (Console.WindowWidth - 100) / 2;
             Console.Write(new string(' ', padding) + text);
         }
         static void ShowVillageMenu()
@@ -80,14 +83,16 @@ namespace Text_RPG_Sparta
                 Console.WriteLine("\n");
                 MidText("스파르타 마을에 오신 것을 환영합니다!");
                 Console.WriteLine("\n\n");
-                LeftText("1. 스태창\n");
-                LeftText("2. 인벤토리\n");
-                LeftText("3. 상점\n");
-                LeftText("4. 던전입장\n");
-                LeftText("5. 휴식하기\n\n\n\n\n\n\n\n\n\n");
+                LeftText("1. 스태창\n\n");
+                LeftText("2. 인벤토리\n\n");
+                LeftText("3. 상점\n\n");
+                LeftText("4. 던전입장\n\n");
+                LeftText("5. 휴식하기");
+                Console.SetCursorPosition(0, 25);
                 MidText("원하시는 행동을 입력해주세요.\n");
                 LeftText("▶▶");
                 Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+
                 string input = Console.ReadLine();
 
                 switch (input)
@@ -121,7 +126,8 @@ namespace Text_RPG_Sparta
                 LeftText($"체력: {player.Hp}\n");
                 LeftText($"Gold: {player.Coin}\n\n\n\n\n");
                 LeftText("0. 나가기\n\n\n");
-                MidText(" 원하시는 행동을 입력해주세요.\n");
+                Console.SetCursorPosition(0, 25);
+                MidText("원하시는 행동을 입력해주세요.\n");
                 LeftText("▶▶");
                 Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
 
@@ -146,8 +152,8 @@ namespace Text_RPG_Sparta
                 Console.WriteLine("\n");
                 MidShopText(" [인 벤 토 리]\n");
                 MidShopText("\b아이템  목록");
-                Console.SetCursorPosition(0, 21);
-                MidText("1. 장비 메뉴   0. 돌아가기");
+                Console.SetCursorPosition(0, 23);
+                MidText("       1. 장비 메뉴     0. 돌아가기");
                 foreach (var item in player.Inventory)
                 {
                     LeftShopText($"- {item.Name} (공격력: {item.IncreaseAtk}, 방어력: {item.IncreaseDef}, 가격: {item.Price})");
@@ -222,33 +228,41 @@ namespace Text_RPG_Sparta
                 MidShopText("     상 점\n");
                 MidText("  필요한 아이템을 얻을 수 있는 상점입니다.\n");
                 MidText("       [아이템  목록]\n");
-                Console.SetCursorPosition(0, 8);
 
                 foreach (var item in shopWeapon)
                 {
-                    LeftShopText($"- {item.GetDisplayName()}");
-                    Console.SetCursorPosition(50, Console.CursorTop);
+                    LeftShopText($"-  {item.GetDisplayName()}");
+                    Console.SetCursorPosition(29, Console.CursorTop);
                     Console.Write($"| 공격력: {item.IncreaseAtk}");
-                    Console.SetCursorPosition(60, Console.CursorTop);
+                    Console.SetCursorPosition(42, Console.CursorTop);
 
-                    if (item.IsPurchased == true)
-                        { Console.Write($"| (구매완료)"); }
-                    else if (item.IsPurchased == false)
-                        { Console.Write($"| {item.Price} G"); }
+                    if (item.IsPurchased)
+                    { Console.Write($"| (구매완료)"); }
+                    else if (!item.IsPurchased)
+                    { Console.Write($"| {item.Price} G"); }
 
-                    Console.SetCursorPosition(70, Console.CursorTop);
-                    Console.Write($"| {item.GetShopPurchased()}");
-                    Console.SetCursorPosition(60, Console.CursorTop);
-                    }
+                    Console.SetCursorPosition(51, Console.CursorTop);
+                    Console.Write($"| {item.ShopDescription}\n\n");
+                }
                 foreach (var item in shopArmor)
                 {
-                    LeftShopText($"- {item.GetDisplayName()}");
-                    Console.SetCursorPosition(50, Console.CursorTop);
-                    Console.Write($"| 방어력: {item.IncreaseDef} | 가격: {item.Price}\n");
+                    LeftShopText($"-  {item.GetDisplayName()}");
+                    Console.SetCursorPosition(29, Console.CursorTop);
+                    Console.Write($"| 방어력: {item.IncreaseDef}");
+                    Console.SetCursorPosition(42, Console.CursorTop);
+
+                    if (item.IsPurchased)
+                    { Console.Write($"| (구매완료)"); }
+                    else if (!item.IsPurchased)
+                    { Console.Write($"| {item.Price} G"); }
+
+                    Console.SetCursorPosition(51, Console.CursorTop);
+                    Console.Write($"| {item.ShopDescription}\n\n");
                 }
-                Console.SetCursorPosition(0, 23);
+
+                Console.SetCursorPosition(0, 22);
                 MidShopText($"[보유 골드]       {player.Coin} G\n");
-                MidShopText("\b\b1. 아이템 구매   2. 아이템 판매   0. 돌아가기\n");
+                LeftText(" 1. 아이템 구매     2. 아이템 판매     0. 돌아가기\n");
                 MidText("원하시는 행동을 입력해주세요.\n");
                 LeftText("▶▶");
                 Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
@@ -256,7 +270,142 @@ namespace Text_RPG_Sparta
 
                 if (input == "1")
                 {
+                    while (true)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("");
+                        MidShopText("     상 점\n");
+                        MidText("구매할 아이템을 선택하세요.\n");
+                        MidText("       [아이템  목록]\n");
 
+                        int number = 1;
+                        foreach (var item in shopWeapon)
+                        {
+                            item.ShopIndex = number;
+                            LeftShopText($"{number}. {item.GetDisplayName()}");
+                            Console.SetCursorPosition(29, Console.CursorTop);
+                            Console.Write($"| 공격력: {item.IncreaseAtk}");
+                            Console.SetCursorPosition(42, Console.CursorTop);
+
+                            if (item.IsPurchased)
+                            { Console.Write($"| (구매완료)"); }
+                            else if (!item.IsPurchased)
+                            { Console.Write($"| {item.Price} G"); }
+
+                            Console.SetCursorPosition(51, Console.CursorTop);
+                            Console.Write($"| {item.ShopDescription}\n\n");
+                            number++;
+                        }
+                        foreach (var item in shopArmor)
+                        {
+                            item.ShopIndex = number;
+                            LeftShopText($"{number}. {item.GetDisplayName()}");
+                            Console.SetCursorPosition(29, Console.CursorTop);
+                            Console.Write($"| 방어력: {item.IncreaseDef}");
+                            Console.SetCursorPosition(42, Console.CursorTop);
+
+                            if (item.IsPurchased)
+                            { Console.Write($"| (구매완료)"); }
+                            else if (!item.IsPurchased)
+                            { Console.Write($"| {item.Price} G"); }
+
+                            Console.SetCursorPosition(51, Console.CursorTop);
+                            Console.Write($"| {item.ShopDescription}\n");
+                            number++;
+                        }
+                        Console.SetCursorPosition(0, 22);
+                        MidShopText($"[보유 골드]       {player.Coin} G\n");
+                        MidShopText("\b\b\b\b\b* 구매할 상품의 번호를 입력하세요.    0. 돌아가기\n");
+                        MidText("원하시는 행동을 입력해주세요.\n");
+                        LeftText("▶▶");
+                        Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                        string buyInput = Console.ReadLine();
+
+                        if (buyInput == "0")
+                        {
+                            break;
+                        }
+                        if (int.TryParse(buyInput, out int buyChoice) && buyChoice > 0 && buyChoice <= shopWeapon.Count + shopArmor.Count)
+                        {
+                            Item itemToBuy = null;
+                            foreach (var weapon in shopWeapon)
+                            {
+                                if (weapon.ShopIndex == buyChoice)
+                                {
+                                    itemToBuy = weapon;
+                                    break;
+                                }
+                            }
+                            if (itemToBuy == null)
+                            {
+                                foreach (var armor in shopArmor)
+                                {
+                                    if (armor.ShopIndex == buyChoice)
+                                    {
+                                        itemToBuy = armor;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (itemToBuy != null)
+                            {
+                                if (itemToBuy.IsPurchased)
+                                {
+                                    Console.WriteLine("이미 구매한 아이템입니다.");
+                                    Console.ReadKey();
+                                }
+                                else if (player.Coin >= itemToBuy.Price)
+                                {
+                                    player.Inventory.Add(itemToBuy);
+                                    player.Coin -= itemToBuy.Price;
+                                    itemToBuy.IsPurchased = true;
+                                    Console.WriteLine($"아이템 '{itemToBuy.Name}'을(를) 구매했습니다. 현재 골드: {player.Coin} G");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("골드가 부족합니다.");
+                                    Console.ReadKey();
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("잘못된 입력입니다.");
+                                Console.ReadKey();
+                            }
+                        }
+                    }
+                }
+                else if (input == "2")
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n");
+                    MidShopText("판매할 아이템을 선택하세요.\n");
+                    for (int i = 0; i < player.Inventory.Count; i++)
+                    {
+                        var item = player.Inventory[i];
+                        Console.WriteLine($"{i + 1}. {item.GetDisplayName()} (공격력: {item.IncreaseAtk}, 방어력: {item.IncreaseDef}, 가격: {item.Price})");
+                    }
+                    Console.WriteLine("0. 돌아가기");
+                    Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                    string sellInput = Console.ReadLine();
+                    if (sellInput == "0")
+                    {
+                        continue;
+                    }
+                    if (int.TryParse(sellInput, out int sellChoice) && sellChoice > 0 && sellChoice <= player.Inventory.Count)
+                    {
+                        var itemToSell = player.Inventory[sellChoice - 1];
+                        player.Coin += itemToSell.Price;
+                        player.Inventory.RemoveAt(sellChoice - 1);
+                        Console.WriteLine($"아이템 '{itemToSell.Name}'을(를) 판매했습니다. 현재 골드: {player.Coin} G");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Console.ReadKey();
+                    }
                 }
                 else if (input == "0")
                 {
@@ -297,7 +446,7 @@ namespace Text_RPG_Sparta
                         {
                             Name = "쉬운 던전",
                             DefNeed = 5,
-                            HpDecrease = 10,
+                            HpDecrease = 0,
                             Description = "페르시아인이 도사리고 있는 쉬운 던전입니다. 권장 방어력: 5"
                         };
                         easyDungeon.EnterDungeon(1);
@@ -311,7 +460,7 @@ namespace Text_RPG_Sparta
                         {
                             Name = "보통 던전",
                             DefNeed = 10,
-                            HpDecrease = 20,
+                            HpDecrease = 0,
                             Description = "페르시아인이 도사리고 있는 보통 던전입니다. 권장 방어력: 10"
                         };
                         nomalDungeon.EnterDungeon(2);
@@ -325,7 +474,7 @@ namespace Text_RPG_Sparta
                         {
                             Name = "어려운 던전",
                             DefNeed = 15,
-                            HpDecrease = 30,
+                            HpDecrease = 0,
                             Description = "페르시아인이 도사리고 있는 어려운 던전입니다. 권장 방어력: 15"
                         };
                         hardDungeon.EnterDungeon(3);
@@ -382,7 +531,9 @@ namespace Text_RPG_Sparta
     public abstract class Item
     {
         public string Name { get; set; }
+        public int ShopIndex { get; set; }
         public string Description { get; set; }
+        public string ShopDescription { get; set; }
         public int IncreaseAtk { get; set; }
         public int IncreaseDef { get; set; }
         public ItemType Type { get; set; }
@@ -392,12 +543,13 @@ namespace Text_RPG_Sparta
         public bool IsPurchased { get; set; } = false;
 
         public string GetDisplayName() => (IsEquipped ? "[E]" : "") + Name;
-        public string GetShopPurchased() => (IsPurchased ? "구매완료" : PriceString);
     }
     public class Weapon : Item
     {
         public string Name { get; set; }
+        public int ShopIndex { get; set; }
         public string Description { get; set; }
+        public string ShopDescription { get; set; }
         public int IncreaseAtk { get; set; }
         public int IncreaseDef { get; set; }
         public ItemType Type { get; set; } = ItemType.Weapon;
@@ -409,7 +561,9 @@ namespace Text_RPG_Sparta
     public class Armor : Item
     {
         public string Name { get; set; }
+        public int ShopIndex { get; set; }
         public string Description { get; set; }
+        public string ShopDescription { get; set; }
         public int IncreaseAtk { get; set; }
         public int IncreaseDef { get; set; }
         public ItemType Type { get; set; } = ItemType.Armor;

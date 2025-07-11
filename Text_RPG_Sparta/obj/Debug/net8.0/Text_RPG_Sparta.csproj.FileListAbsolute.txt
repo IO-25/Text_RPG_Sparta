@@ -12,3 +12,4 @@ C:\Users\oks14\OneDrive - jbnu.ac.kr\바탕 화면\Practice\Text_RPG_Sparta\Text
 C:\Users\oks14\OneDrive - jbnu.ac.kr\바탕 화면\Practice\Text_RPG_Sparta\Text_RPG_Sparta\obj\Debug\net8.0\Text_RPG_Sparta.pdb
 C:\Users\oks14\OneDrive - jbnu.ac.kr\바탕 화면\Practice\Text_RPG_Sparta\Text_RPG_Sparta\obj\Debug\net8.0\Text_RPG_Sparta.genruntimeconfig.cache
 C:\Users\oks14\OneDrive - jbnu.ac.kr\바탕 화면\Practice\Text_RPG_Sparta\Text_RPG_Sparta\obj\Debug\net8.0\ref\Text_RPG_Sparta.dll
+C:\Users\oks14\OneDrive - jbnu.ac.kr\바탕 화면\Practice\Text_RPG_Sparta\Text_RPG_Sparta\obj\Debug\net8.0\Text_RPG_Sparta.sourcelink.json
