@@ -245,7 +245,7 @@ namespace Text_RPG_Sparta
                 }
 
                 Console.SetCursorPosition(0, 21);
-                MidText($"[보유 골드] {player.Coin} G | 그녀석들.. 통조림은 건들지 않더라.. 냄새로 구분하는 걸까?\n\n");
+                MidText($"[보유 골드] {player.Coin} G | 그녀석들.. 통조림은 건들지 않더라.. 냄새로 구분하는 걸까?\n");
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 MidText("       1. 장비 메뉴     Enter. 돌아가기");
@@ -320,9 +320,9 @@ namespace Text_RPG_Sparta
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.SetCursorPosition(0, 22);
+                Console.SetCursorPosition(0, 23);
                 MidText("* 장비의 번호를 입력하세요.     Enter. 돌아가기");
-                Console.SetCursorPosition(0, 24);
+                Console.SetCursorPosition(0, 25);
                 MidText("원하시는 행동을 입력해주세요.\n");
                 LeftText("▶▶");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -536,37 +536,98 @@ namespace Text_RPG_Sparta
                 }
                 else if (input == "2")
                 {
-                    Console.Clear();
-                    Console.WriteLine("\n");
-                    MidShopText("판매할 아이템을 선택하세요.\n");
-                    for (int i = 0; i < player.Inventory.Count; i++)
-                    {
-                        var item = player.Inventory[i];
-                        Console.WriteLine($"{i + 1}. {item.GetDisplayName()} (공격력: {item.IncreaseAtk}, 방어력: {item.IncreaseDef}, 가격: {item.Price})");
-                    }
-                    Console.WriteLine("Enter.  돌아가기");
-                    Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
-                    string? sellInput = Console.ReadLine();
-                    if (sellInput == "")
-                    {
-                        continue;
-                    }
-                    if (int.TryParse(sellInput, out int sellChoice) && sellChoice > 0 && sellChoice <= player.Inventory.Count)
-                    {
-                        var itemToSell = player.Inventory[sellChoice - 1];
-                        player.Coin += itemToSell.Price;
-                        player.Inventory.RemoveAt(sellChoice - 1);
-                        Console.WriteLine($"아이템 '{itemToSell.Name}'을(를) 판매했습니다. 현재 골드: {player.Coin} G");
-                        Console.ReadKey();
-                    }
-                    else
+                    while (true)
                     {
                         Console.Clear();
-                        Console.SetCursorPosition((Console.WindowWidth / 2 - 6), Console.WindowHeight / 2 - 2);
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Console.ReadKey();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine();
+                        MidShopText("     상 점\n");
+                        MidText("판매할 아이템을 선택하세요.\n");
+                        MidText("       [아이템  목록]\n");
+                        int number = 1;
+                        foreach (var item in player.Inventory)
+                        {
+                            if (item.IsEquipped)
+                            {
+                                LeftShopText($"{number}. {item.GetDisplayName()}");
+                            }
+                            else
+                            {
+                                LeftShopText($"{number}. {item.GetDisplayName()}");
+                            }
+                            Console.SetCursorPosition(25, Console.CursorTop);
+                            if (item.Type == ItemType.Weapon)
+                            {
+                                Console.Write($"| 공격력: {item.IncreaseAtk}");
+                            }
+                            else if (item.Type == ItemType.Armor)
+                            {
+                                Console.Write($"| 방어력: {item.IncreaseDef}");
+                            }
+                            Console.SetCursorPosition(38, Console.CursorTop);
+                            if (item.IsPurchased)
+                            { Console.Write($"| 구매완료"); }
+                            else if (!item.IsPurchased)
+                            { Console.Write($"| {item.Price} G"); }
+                            Console.SetCursorPosition(48, Console.CursorTop);
+                            Console.Write($"| {item.ShopDescription}\n\n");
+                            number++;
+                        }
+                        Console.SetCursorPosition(0, 21);
+                        MidShopText($"[보유 골드]       {player.Coin} G\n");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        MidShopText("\b\b\b\b\b\b\b\b\b* 판매할 상품의 번호를 입력하세요. 판매가격은 구매가격의 85%입니다.    Enter. 돌아가기\n");
+                        MidText("원하시는 행동을 입력해주세요.\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        LeftText("▶▶");
+                        Console.SetCursorPosition((Console.WindowWidth / 3 - 2), Console.CursorTop - 1);
+                        string? sellInput = Console.ReadLine();
+                        if (sellInput == "")
+                        {
+                            break;
+                        }
+                        if (int.TryParse(sellInput, out int sellChoice) && sellChoice > 0 && sellChoice <= player.Inventory.Count)
+                        {
+                            var itemToSell = player.Inventory[sellChoice - 1];
+                            if (itemToSell.IsPurchased)
+                            {
+                                if (itemToSell.IsEquipped)
+                                {
+                                    itemToSell.IsEquipped = false;
+                                    player.Coin += itemToSell.Price*0.85;
+                                    player.Inventory.Remove(itemToSell);
+                                    itemToSell.IsPurchased = false;
+
+                                    Console.Clear();
+                                    Console.SetCursorPosition((Console.WindowWidth / 2 - 10), Console.WindowHeight / 2 - 2);
+                                    Console.WriteLine($"아이템 '{itemToSell.Name}'을(를) 판매했습니다. 현재 골드: {player.Coin} G");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    player.Coin += itemToSell.Price*0.85;
+                                    player.Inventory.Remove(itemToSell);
+                                    itemToSell.IsPurchased = false;
+
+                                    Console.Clear();
+                                    Console.SetCursorPosition((Console.WindowWidth / 2 - 25), Console.WindowHeight / 2 - 2);
+                                    Console.WriteLine($"아이템 '{itemToSell.Name}'을(를) 판매했습니다. 현재 골드: {player.Coin} G");
+                                    Console.ReadKey();
+                                }
+                                itemToSell.IsEquipped = false;
+                            
+                               
+
+
+
+                            }
+
+                        }
                     }
                 }
+
+
+
                 else if (input == "")
                 {
                     break;
@@ -716,8 +777,8 @@ namespace Text_RPG_Sparta
             public int BaseAtk { get; set; } = 10;
             public int BaseDef { get; set; } = 5;
             public int MaxHp { get; set; } = 100;
-            public int Hp { get; set; } = 100;
-            public int Coin { get; set; } = 1500;
+            public double Hp { get; set; } = 100;
+            public double Coin { get; set; } = 1500;
             public List<Item> Inventory { get; set; } = new List<Item>();
 
             public int GetAtk() => BaseAtk + Inventory.Where(i => i.IsEquipped && i.Type == ItemType.Weapon).Sum(i => i.IncreaseAtk);
@@ -740,7 +801,7 @@ namespace Text_RPG_Sparta
             public int IncreaseAtk { get; set; }
             public int IncreaseDef { get; set; }
             public ItemType Type { get; set; }
-            public int Price { get; set; }
+            public double Price { get; set; }
             public string PriceString => Price + " G";
             public bool IsEquipped { get; set; } = false;
             public bool IsPurchased { get; set; } = false;
