@@ -615,19 +615,11 @@ namespace Text_RPG_Sparta
                                     Console.ReadKey();
                                 }
                                 itemToSell.IsEquipped = false;
-                            
-                               
-
-
-
                             }
 
                         }
                     }
                 }
-
-
-
                 else if (input == "")
                 {
                     break;
@@ -722,8 +714,8 @@ namespace Text_RPG_Sparta
             Console.SetCursorPosition((Console.WindowWidth / 2 - 7), Console.WindowHeight / 2 - 5);
             Console.Write("휴식하시겠습니까?");
             Console.WriteLine("\n\n\n");
-            Console.SetCursorPosition((Console.WindowWidth / 2 - 7), Console.WindowHeight / 2 - 2);
-            Console.Write("1. 휴식하기\n\n");
+            Console.SetCursorPosition((Console.WindowWidth / 2 - 8), Console.WindowHeight / 2 - 2);
+            Console.Write("1. 휴식하기 - 500 G\n\n");
             Console.SetCursorPosition((Console.WindowWidth / 2 - 7), Console.WindowHeight / 2);
             Console.Write("Enter. 돌아가기\n");
 
@@ -738,24 +730,52 @@ namespace Text_RPG_Sparta
             switch (input)
             {
                 case "1":
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n");
-                    Console.WriteLine("\n");
-                    MidText("     휴식 중입니다. 체력을 회복합니다.\n\n\n");
-                    System.Threading.Thread.Sleep(500);
-                    MidText("            ·\n\n");
-                    System.Threading.Thread.Sleep(500);
-                    MidText("            ·\n\n");
-                    System.Threading.Thread.Sleep(500);
-                    MidText("            ·\n\n");
-                    System.Threading.Thread.Sleep(500);
+                    if (player.Hp == player.MaxHp)
+                    {
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 6), Console.WindowHeight / 2 - 2);
+                        MidText("이미 체력이 가득 찼습니다.");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else if (player.Hp < player.MaxHp && player.Coin < 500)
+                    {
+                        Console.Clear();
+                        Console.SetCursorPosition((Console.WindowWidth / 2 - 6), Console.WindowHeight / 2 - 2);
+                        MidText("골드가 부족합니다. 휴식에는 500 G가 필요합니다.");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else if (player.Hp < player.MaxHp && player.Coin >= 500)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n\n\n");
+                        Console.WriteLine("\n");
+                        MidText("     휴식 중입니다. 체력을 회복합니다.\n\n\n");
+                        System.Threading.Thread.Sleep(500);
+                        MidText("            ·\n\n");
+                        System.Threading.Thread.Sleep(500);
+                        MidText("            ·\n\n");
+                        System.Threading.Thread.Sleep(500);
+                        MidText("            ·\n\n");
+                        System.Threading.Thread.Sleep(500);
 
-                    player.Hp = player.MaxHp;
-                    MidText($"     체력이 {player.MaxHp}으로 회복되었습니다.\n\n");
-                    MidText("   휴식이 끝났습니다.");
-                    Console.WriteLine("\n");
-                    MidText("\b메뉴로 돌아가려면 아무 키나 누르세요.");
-                    Console.ReadKey();
+                        player.Hp += 100;
+                        if (player.Hp > player.MaxHp)
+                        {
+                            player.Hp = player.MaxHp;
+                            MidText($"     체력이 {player.MaxHp}으로 회복되었습니다.\n\n");
+                        }
+                        else
+                        {
+                            MidText($"     체력이 {player.Hp}으로 회복되었습니다.\n\n");
+                        }
+                        MidText("   휴식이 끝났습니다.");
+                        Console.WriteLine("\n");
+                        MidText("\b메뉴로 돌아가려면 아무 키나 누르세요.");
+                        Console.ReadKey();
+                        break;
+                    }
                     break;
                 case "":
                     return;
